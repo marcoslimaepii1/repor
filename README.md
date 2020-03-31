@@ -7,6 +7,10 @@ Node-report get an input docx template (input.docx) that using a lot of
 variables defined in JSON file (input.json) generate an output
 (output.docx) as report in DOCX.
 
+## Requirements
+
+- NodeJS >= v11.15.0
+
 ## Install
 
 ```
@@ -18,4 +22,3 @@ npm install
 ```
 node report.js
 ```
-
