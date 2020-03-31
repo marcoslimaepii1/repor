@@ -1,0 +1,15 @@
+{
+  "name": "report",
+  "version": "1.0.0",
+  "description": "",
+  "main": "node.js",
+  "scripts": {
+    "build": "node node.js"
+  },
+  "author": "Daniel Pimentel",
+  "license": "MIT",
+  "dependencies": {
+    "docxtemplater": "^3.17.3",
+    "pizzip": "^3.0.6"
+  }
+}
