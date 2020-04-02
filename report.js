@@ -4,6 +4,9 @@ var Docxtemplater = require('docxtemplater');
 var fs = require('fs');
 var path = require('path');
 
+var expressions = require('angular-expressions');
+var merge = require("lodash.merge");
+
 function replaceErrors(key, value) {
     if (value instanceof Error) {
         return Object.getOwnPropertyNames(value).reduce(function(error, key) {
@@ -26,6 +29,28 @@ function errorHandler(error) {
     throw error;
 }
 
+function angularParser(tag) {
+    if (tag === '.') {
+        return {
+            get: function(s){ return s;}
+        };
+    }
+    const expr = expressions.compile(
+        tag.replace(/(’|‘)/g, "'").replace(/(“|”)/g, '"')
+    );
+    return {
+        get: function(scope, context) {
+            let obj = {};
+            const scopeList = context.scopeList;
+            const num = context.num;
+            for (let i = 0, len = num + 1; i < len; i++) {
+                obj = merge(obj, scopeList[i]);
+            }
+            return expr(scope, obj);
+        }
+    };
+}
+
 var content = fs.readFileSync(
     path.resolve(__dirname, 'input.docx'), 'binary');
 var input_json = require('./input.json');
@@ -33,7 +58,8 @@ var zip = new PizZip(content);
 var doc;
 
 try {
-    doc = new Docxtemplater(zip);
+    doc = new Docxtemplater().loadZip(zip).setOptions({parser:angularParser});
+    //doc = new Docxtemplater(zip);
 } catch(error) {
     errorHandler(error);
 }
