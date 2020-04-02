@@ -9,7 +9,9 @@
   "author": "Daniel Pimentel",
   "license": "MIT",
   "dependencies": {
+    "angular-expressions": "^1.1.1",
     "docxtemplater": "^3.17.3",
+    "lodash.merge": "^4.6.2",
     "pizzip": "^3.0.6"
   }
 }
